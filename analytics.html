@@ -10,50 +10,33 @@
 
   <nav class="navbar">
     <div class="logo">🍏 Expiry Reminder</div>
+    <div class="hamburger"><span></span><span></span><span></span></div>
     <div class="menu">
       <a href="./index.html">Home</a>
-      <a href="./all-items.html">All Items</a>
+      <a href="./all-item.html">All Items</a>
       <a href="./add-item.html">Add Item</a>
       <a href="./analytics.html">Analytics</a>
       <a href="./settings.html">Settings</a>
     </div>
   </nav>
 
-  <main class="analytics-wrap">
-    <h2>Analytics Dashboard</h2>
+  <main class="analytics-wrap" style="padding:20px;">
+    <h2 style="text-align:center;">Analytics Dashboard</h2>
 
-    <!-- Summary cards -->
     <section class="ana-grid">
-      <div class="ana-card">
-        <div class="ana-title">Total Items</div>
-        <div class="ana-big" id="ana-total">0</div>
-      </div>
-      <div class="ana-card">
-        <div class="ana-title">Expiring Today</div>
-        <div class="ana-big warn" id="ana-today">0</div>
-      </div>
-      <div class="ana-card">
-        <div class="ana-title">This Week</div>
-        <div class="ana-big warn" id="ana-week">0</div>
-      </div>
-      <div class="ana-card">
-        <div class="ana-title">Safe</div>
-        <div class="ana-big ok" id="ana-safe">0</div>
-      </div>
-      <div class="ana-card">
-        <div class="ana-title">Expired</div>
-        <div class="ana-big danger" id="ana-expired">0</div>
-      </div>
+      <div class="ana-card"><div class="ana-title">Total Items</div><div class="ana-big" id="ana-total">0</div></div>
+      <div class="ana-card"><div class="ana-title">Expiring Today</div><div class="ana-big warn" id="ana-today">0</div></div>
+      <div class="ana-card"><div class="ana-title">Expiring in 3 Days</div><div class="ana-big warn" id="ana-week">0</div></div>
+      <div class="ana-card"><div class="ana-title">Safe</div><div class="ana-big ok" id="ana-safe">0</div></div>
+      <div class="ana-card"><div class="ana-title">Expired</div><div class="ana-big danger" id="ana-expired">0</div></div>
     </section>
 
-    <!-- By Category -->
     <section class="ana-section">
       <h3>Items by Category</h3>
       <canvas id="catChart" width="900" height="280"></canvas>
       <div class="ana-note" id="catNote"></div>
     </section>
 
-    <!-- Next 14 Days -->
     <section class="ana-section">
       <h3>Expiries in Next 14 Days</h3>
       <canvas id="timelineChart" width="900" height="280"></canvas>
@@ -65,7 +48,15 @@
     <p>© 2025 Expiry Date Reminder | Designed by Vishal & Shail</p>
   </footer>
 
+  <script src="notify.js"></script>
   <script src="script.js"></script>
   <script src="sw.js"></script>
+
+  <script>
+    const burger = document.querySelector('.hamburger');
+    const menu = document.querySelector('.menu');
+    burger.addEventListener('click', () => menu.classList.toggle('active'));
+  </script>
+
 </body>
 </html>
