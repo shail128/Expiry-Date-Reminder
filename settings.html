@@ -6,13 +6,12 @@
   <title>Settings</title>
   <link rel="stylesheet" href="style.css"/>
   <link rel="stylesheet" href="notify.css">
-<script src="notify.js"></script>
-
 </head>
 <body class="settings-page">
 
   <nav class="navbar">
     <div class="logo">🍏 Expiry Reminder</div>
+    <div class="hamburger"><span></span><span></span><span></span></div>
     <div class="menu">
       <a href="./index.html">Home</a>
       <a href="./all-item.html">All Items</a>
@@ -25,7 +24,6 @@
   <main class="settings-wrap">
     <h2>Settings</h2>
 
-    <!-- Lead days -->
     <div class="set-card">
       <label class="set-row">
         <span>Days before expiry to highlight as “This Week”</span>
@@ -34,16 +32,14 @@
       <small class="muted">Default is 7 days.</small>
     </div>
 
-    <!-- Theme -->
     <div class="set-card">
       <label class="set-row">
         <span>Dark Mode</span>
         <input type="checkbox" id="set-theme"/>
       </label>
-      <small class="muted">Toggle a darker theme for low-light viewing.</small>
+      <small class="muted">Toggle dark theme for low light viewing.</small>
     </div>
 
-    <!-- Notifications -->
     <div class="set-card">
       <label class="set-row">
         <span>Enable Notifications</span>
@@ -57,10 +53,8 @@
         <button class="btn" id="btn-ask-permission">🔔 Allow Notifications</button>
         <button class="btn" id="btn-test">🔔 Test Notification</button>
       </div>
-      <small class="muted">We’ll check daily at the selected time and alert you about items expiring within your lead days.</small>
     </div>
 
-    <!-- Danger -->
     <div class="set-card danger">
       <button class="btn danger" id="btn-clear">🗑️ Clear All Items</button>
       <small class="muted">This removes all saved items from your browser.</small>
@@ -71,7 +65,15 @@
     <p>© 2025 Expiry Date Reminder | Designed by Vishal & Shail</p>
   </footer>
 
+  <script src="notify.js"></script>
   <script src="script.js"></script>
   <script src="sw.js"></script>
+
+  <script>
+    const burger = document.querySelector('.hamburger');
+    const menu = document.querySelector('.menu');
+    burger.addEventListener('click', () => menu.classList.toggle('active'));
+  </script>
+
 </body>
 </html>
