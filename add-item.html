@@ -10,8 +10,9 @@
 
   <nav class="navbar">
     <div class="logo">🍏 Expiry Reminder</div>
+    <div class="hamburger"><span></span><span></span><span></span></div>
     <div class="menu">
-     <a href="./index.html">Home</a>
+      <a href="./index.html">Home</a>
       <a href="./all-item.html">All Items</a>
       <a href="./add-item.html">Add Item</a>
       <a href="./analytics.html">Analytics</a>
@@ -20,15 +21,26 @@
   </nav>
 
   <main class="form-wrap">
-    <div class="form-container slide-up">
+    <div class="form-container">
       <h2>Add New Item</h2>
-
       <form id="itemForm">
         <label for="name">Item Name</label>
         <input type="text" id="name" placeholder="Enter item name" required>
 
-        <label for="category">Category</label>
-        <input type="text" id="category" placeholder="Enter category" required>
+        <label for="category">Food Type</label>
+        <select id="category" required>
+          <option value="">-- Select Food Type --</option>
+          <option value="Fruit">🍎 Fruit</option>
+          <option value="Vegetable">🥦 Vegetable</option>
+          <option value="Dairy">🥛 Dairy</option>
+          <option value="Meat">🍗 Meat</option>
+          <option value="Seafood">🐟 Seafood</option>
+          <option value="Grain">🌾 Grain</option>
+          <option value="Snack">🍪 Snack</option>
+          <option value="Beverage">🥤 Beverage</option>
+          <option value="Frozen">❄️ Frozen Food</option>
+          <option value="Other">🍽️ Other</option>
+        </select>
 
         <label for="expiry">Expiry Date</label>
         <input type="date" id="expiry" required>
@@ -45,7 +57,15 @@
     <p>© 2025 Expiry Date Reminder | Designed by Vishal & Shail</p>
   </footer>
 
+  <script src="notify.js"></script>
   <script src="script.js"></script>
   <script src="sw.js"></script>
+
+  <script>
+    const burger = document.querySelector('.hamburger');
+    const menu = document.querySelector('.menu');
+    burger.addEventListener('click', () => menu.classList.toggle('active'));
+  </script>
+
 </body>
 </html>
