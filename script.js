@@ -13,6 +13,7 @@ const loadItems = () => {
 const saveItems = (arr) => localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
 
 function loadSettings() {
+  // DEFAULT leadDays reset to 7
   const def = { leadDays: 7, theme: "light", notify: false, notifyTime: "09:00" };
   try { return { ...def, ...(JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}) }; }
   catch { return def; }
@@ -63,22 +64,29 @@ function initAddItemPage() {
     e.preventDefault();
 
     const name = document.getElementById("name").value.trim();
-    const category = document.getElementById("category").value.trim();
+    const category = document.getElementById("category").value;
     const expiry = document.getElementById("expiry").value;
     const quantity = document.getElementById("quantity").value.trim();
 
     if (!name || !category || !expiry) {
-      alert("Please fill Item Name, Category and Expiry Date.");
+      alert("Please fill Item Name, Food Type and Expiry Date.");
       return;
     }
 
     const items = loadItems();
-    items.push({ id: uid(), name, category, expiry, quantity: quantity || null, createdAt: new Date().toISOString() });
+    items.push({
+      id: uid(),
+      name,
+      category,
+      expiry,
+      quantity: quantity || null,
+      createdAt: new Date().toISOString()
+    });
     saveItems(items);
 
     form.reset();
     alert("Item saved ✅");
-    // window.location.href = "index.html";
+    refreshDashboard();
   });
 }
 
@@ -97,7 +105,7 @@ function renderRow(item) {
     <div class="mini-item" data-id="${item.id}">
       <div class="mini-left">
         <div class="mini-title">${item.name}</div>
-        <div class="mini-meta">Exp: ${fmtDate(item.expiry)} ${badge(tag, tone)}</div>
+        <div class="mini-meta">Exp: ${fmtDate(item.expiry)} • ${item.category || "Uncategorized"} ${badge(tag, tone)}</div>
       </div>
       <div class="mini-right">
         ${item.quantity ? `<span class="qty">×${item.quantity}</span>` : ""}
@@ -124,13 +132,13 @@ function refreshDashboard() {
   });
 
   if (today.length) todayBox.innerHTML = today.sort((a,b)=>a.expiry.localeCompare(b.expiry)).map(renderRow).join("");
-  else renderEmpty(todayBox, "Oops! Your basket is empty");
+  else renderEmpty(todayBox, "No items expiring today");
 
   if (week.length) weekBox.innerHTML = week.sort((a,b)=>a.expiry.localeCompare(b.expiry)).map(renderRow).join("");
-  else renderEmpty(weekBox, "No items yet");
+  else renderEmpty(weekBox, "No upcoming items");
 
   if (safe.length) safeBox.innerHTML = safe.sort((a,b)=>a.expiry.localeCompare(b.expiry)).map(renderRow).join("");
-  else renderEmpty(safeBox, "No items yet");
+  else renderEmpty(safeBox, "No safe items yet");
 
   // delete handling (event delegation)
   ["expiring-today-list","expiring-week-list","safe-list"].forEach(id => {
@@ -303,9 +311,6 @@ function applyTheme(theme){
 }
 
 /* =================== NOTIFICATIONS: upgraded =================== */
-/* Sends: (a) “Expiring today” (with alert + custom popup), (b) “Upcoming expiries”
-   De-duped once per day per category. */
-
 function getNotifyLog() {
   try { return JSON.parse(localStorage.getItem(NOTIFY_LOG_KEY)) || {}; }
   catch { return {}; }
@@ -419,8 +424,8 @@ async function runExpiryNotificationCheck() {
   if (today.length) {
     const sigT = sigFor(today);
     if (!wasSent("today", sigT)) {
-      if (window.EDRNotify?.showToday) EDRNotify.showToday(today);   // custom popup
-      await sendNotification("Expiring today", listPreview(today));   // OS toast
+      if (window.EDRNotify?.showToday) EDRNotify.showToday(today);
+      await sendNotification("Expiring today", listPreview(today));
       markSent("today", sigT);
     } else {
       console.log("[Notify] 'today' already sent");
@@ -431,16 +436,13 @@ async function runExpiryNotificationCheck() {
   if (soon.length) {
     const sigS = sigFor(soon);
     if (!wasSent("soon", sigS)) {
-      if (window.EDRNotify?.showSoon) EDRNotify.showSoon(soon);      // custom popup (optional)
+      if (window.EDRNotify?.showSoon) EDRNotify.showSoon(soon);
       await sendNotification("Upcoming expiries", listPreview(soon));
       markSent("soon", sigS);
     } else {
       console.log("[Notify] 'soon' already sent");
     }
   }
-
-  // Already expired (optional)
-  // if (expired.length) { const sigE = sigFor(expired); if (!wasSent("expired", sigE)) { await sendNotification("Already expired", listPreview(expired)); markSent("expired", sigE); } }
 }
 
 function startMinuteLoop() {
@@ -556,15 +558,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Service worker early
   await ensureSW();
 
-  // Theme
+  // Apply theme & init pages
   applyTheme(loadSettings().theme);
 
-  // Pages
   initAddItemPage();
   refreshDashboard();
   initAllItemsPage();
   initAnalyticsPage();
   initSettingsPage();
+
+  // === show in-app popup for items expiring TODAY on page load ===
+  (function showTodayOnLoad(){
+    try {
+      const items = loadItems();
+      const todayItems = items.filter(it => it && it.expiry && daysUntil(it.expiry) === 0);
+      if (todayItems.length && window.EDRNotify?.showToday) {
+        console.log("[EDR] showing in-app TODAY popup on load", todayItems);
+        EDRNotify.showToday(todayItems);
+      }
+    } catch (e) {
+      console.error("[EDR] showTodayOnLoad error", e);
+    }
+  })();
 
   // Notifications engine on load if enabled
   const s = loadSettings();
