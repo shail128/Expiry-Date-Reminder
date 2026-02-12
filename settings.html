@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="notify.css">
+<script src="notify.js"></script>
+
+</head>
+<body class="settings-page">
+
+  <nav class="navbar">
+    <div class="logo">🍏 Expiry Reminder</div>
+    <div class="menu">
+      <a href="./index.html">Home</a>
+      <a href="./all-item.html">All Items</a>
+      <a href="./add-item.html">Add Item</a>
+      <a href="./analytics.html">Analytics</a>
+      <a href="./settings.html">Settings</a>
+    </div>
+  </nav>
+
+  <main class="settings-wrap">
+    <h2>Settings</h2>
+
+    <!-- Lead days -->
+    <div class="set-card">
+      <label class="set-row">
+        <span>Days before expiry to highlight as “This Week”</span>
+        <input type="number" id="set-lead" min="1" max="14" value="7"/>
+      </label>
+      <small class="muted">Default is 7 days.</small>
+    </div>
+
+    <!-- Theme -->
+    <div class="set-card">
+      <label class="set-row">
+        <span>Dark Mode</span>
+        <input type="checkbox" id="set-theme"/>
+      </label>
+      <small class="muted">Toggle a darker theme for low-light viewing.</small>
+    </div>
+
+    <!-- Notifications -->
+    <div class="set-card">
+      <label class="set-row">
+        <span>Enable Notifications</span>
+        <input type="checkbox" id="set-notify"/>
+      </label>
+      <label class="set-row" style="margin-top:10px;">
+        <span>Notify time (HH:MM)</span>
+        <input type="time" id="set-notify-time" value="09:00"/>
+      </label>
+      <div style="display:flex; gap:10px; margin-top:12px;">
+        <button class="btn" id="btn-ask-permission">🔔 Allow Notifications</button>
+        <button class="btn" id="btn-test">🔔 Test Notification</button>
+      </div>
+      <small class="muted">We’ll check daily at the selected time and alert you about items expiring within your lead days.</small>
+    </div>
+
+    <!-- Danger -->
+    <div class="set-card danger">
+      <button class="btn danger" id="btn-clear">🗑️ Clear All Items</button>
+      <small class="muted">This removes all saved items from your browser.</small>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Expiry Date Reminder | Designed by Vishal & Shail</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="sw.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+/* ========== EDR Notify ========== */
+.edr-ntf-overlay {
+  position: fixed; inset: 0;
+  background: rgba(14, 23, 38, 0.55);
+  display: grid; place-items: center;
+  z-index: 9999;
+  animation: edr-fade .18s ease-out;
+}
+
+.edr-ntf-card {
+  width: min(520px, calc(100% - 28px));
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow:
+    0 10px 30px rgba(15,132,216,.25),
+    0 2px 10px rgba(0,0,0,.06);
+  overflow: hidden;
+  transform: translateY(10px) scale(.98);
+  animation: edr-pop .22s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+.edr-ntf-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px;
+  background: linear-gradient(90deg, #0f84d8, #0b72b9);
+  color: #fff;
+}
+.edr-ntf-head .edr-ntf-icon {
+  width: 38px; height: 38px; flex: 0 0 38px;
+  display: grid; place-items: center;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 12px;
+  font-size: 20px;
+}
+.edr-ntf-title {
+  font-size: 1.05rem; font-weight: 700; line-height: 1.2;
+}
+.edr-ntf-subtitle {
+  font-size: .82rem; opacity: .9; margin-top: 2px;
+}
+
+.edr-ntf-body { padding: 12px 16px 4px 16px; max-height: 50vh; overflow:auto; }
+.edr-ntf-list { display: grid; gap: 8px; margin-top: 10px; }
+
+.edr-ntf-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border: 1px solid #e6eef7; border-radius: 12px;
+  background: #f9fcff;
+}
+.edr-ntf-l {
+  display: grid; gap: 2px;
+}
+.edr-ntf-name { font-weight: 600; color: #0d3b66; }
+.edr-ntf-meta { font-size: .82rem; color: #5a7184; }
+.edr-ntf-chip {
+  font-size: .72rem; padding: 3px 8px; border-radius: 999px;
+  color: #fff; background: #d32f2f;
+}
+
+.edr-ntf-foot {
+  display: flex; gap: 10px; justify-content: flex-end;
+  padding: 14px 16px 16px 16px; background: #fbfdff; border-top: 1px solid #eef4fb;
+}
+.edr-ntf-btn {
+  border: 0; border-radius: 10px; cursor: pointer; padding: 10px 14px;
+  font-weight: 600; letter-spacing: .2px;
+}
+.edr-ntf-btn.secondary { background: #e7f2fb; color: #0f5f9c; }
+.edr-ntf-btn.primary   { background: #0f84d8; color: #fff; }
+.edr-ntf-btn:hover     { filter: brightness(1.05); }
+
+@keyframes edr-fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes edr-pop  {
+  to { transform: translateY(0) scale(1) }
+}
+
+/* small screen polish */
+@media (max-width: 440px) {
+  .edr-ntf-title { font-size: 1rem; }
+  .edr-ntf-item  { padding: 9px 10px; }
+}

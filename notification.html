@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EDR – Notification Demo</title>
+  <link rel="stylesheet" href="notify.css" />
+</head>
+<body style="font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;">
+  <h2 style="padding:16px">Expiry Date Reminder – Notification Demo</h2>
+  <button id="demoBtn" style="margin:16px;padding:10px 16px;border:0;border-radius:8px;background:#0f84d8;color:#fff;cursor:pointer;">
+    Show “Expiring Today” Popup
+  </button>
+
+  <!-- Popup UI mounts into body (no extra markup required) -->
+  <script src="notify.js"></script>
+  <script>
+    // Demo items
+    const demoItems = [
+      { name: "Milk",     expiry: new Date().toISOString().slice(0,10) },
+      { name: "Bread",    expiry: new Date().toISOString().slice(0,10) },
+      { name: "Yogurt",   expiry: new Date().toISOString().slice(0,10) },
+      { name: "Spinach",  expiry: new Date().toISOString().slice(0,10) },
+    ];
+    document.getElementById("demoBtn").addEventListener("click", () => {
+      EDRNotify.showToday(demoItems);
+    });
+  </script>
+</body>
+</html>
