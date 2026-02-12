@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Item</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="add-page">
+
+  <nav class="navbar">
+    <div class="logo">🍏 Expiry Reminder</div>
+    <div class="menu">
+     <a href="./index.html">Home</a>
+      <a href="./all-item.html">All Items</a>
+      <a href="./add-item.html">Add Item</a>
+      <a href="./analytics.html">Analytics</a>
+      <a href="./settings.html">Settings</a>
+    </div>
+  </nav>
+
+  <main class="form-wrap">
+    <div class="form-container slide-up">
+      <h2>Add New Item</h2>
+
+      <form id="itemForm">
+        <label for="name">Item Name</label>
+        <input type="text" id="name" placeholder="Enter item name" required>
+
+        <label for="category">Category</label>
+        <input type="text" id="category" placeholder="Enter category" required>
+
+        <label for="expiry">Expiry Date</label>
+        <input type="date" id="expiry" required>
+
+        <label for="quantity">Quantity (Optional)</label>
+        <input type="number" id="quantity" placeholder="Enter quantity">
+
+        <button type="submit" class="btn">💾 Save Item</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Expiry Date Reminder | Designed by Vishal & Shail</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="sw.js"></script>
+</body>
+</html>
