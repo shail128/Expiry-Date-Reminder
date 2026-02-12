@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expiry Date Reminder - Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="notify.css">
+
+
+
+</head>
+<body class="home-page">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">🍏 Expiry Reminder</div>
+    <div class="menu">
+ <a href="./index.html">Home</a>
+      <a href="./all-item.html">All Items</a>
+      <a href="./add-item.html">Add Item</a>
+      <a href="./analytics.html">Analytics</a>
+      <a href="./settings.html">Settings</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-text">
+      <h1>Keep Your <span>Food Fresh</span> & Waste Less</h1>
+      <p>Smart reminders, organized kitchen, and stress-free living 🍽️</p>
+      <button class="btn-hero" id="seeAllBtn">See All Items</button>
+    </div>
+    <div class="hero-img">
+      <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt="Food freshness">
+    </div>
+  </header>
+
+  <!-- Dashboard -->
+  <section class="dashboard" id="dashboard">
+    <div class="card expiring-today">
+      <h3>Expiring Today</h3>
+      <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt="Expiring Today">
+      <div id="expiring-today-list" class="mini-list"></div>
+    </div>
+
+    <div class="card expiring-week">
+      <h3>Expiring This Week</h3>
+      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Expiring This Week">
+      <div id="expiring-week-list" class="mini-list"></div>
+    </div>
+
+    <div class="card safe">
+      <h3>Safe</h3>
+      <img src="https://cdn-icons-png.flaticon.com/512/415/415733.png" alt="Safe Items">
+      <div id="safe-list" class="mini-list"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 Expiry Date Reminder | Designed by Vishal & Shail</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="sw.js"></script>
+  <script src="notify.js"></script>
+</body>
+</html>
